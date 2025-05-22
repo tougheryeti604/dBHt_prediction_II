@@ -100,5 +100,6 @@ Legacy CNN model, train and test loop for training of model to predict dBHt > th
 
 Legacy RNN model, train and test loop for training of model to predict dBHt > threshold probabilities
 
+### u_train_model_dBHt_CrossAttMini.py
 
-
+Cross Attention Transformer model used for training to predict dBHt values, with mini mini batch backpropagation + mini batch gradient descent implemented
