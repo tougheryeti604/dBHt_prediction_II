@@ -1,4 +1,4 @@
-## Overall functionality CAA 200525
+## Overall functionality CAA 220525
 These collection of python scripts prepares and processes data from ACE, OMNI and INTERMAG for use as TRAINING, VALIDATION and TESTING INPUT and LABEL data.
 This is for training of a deep neural network for the purpose of: 
 1. Predicting dBHt threshold excursion probabilities
@@ -72,7 +72,9 @@ This script provides the model architecture, data calling, training and testing 
 
 Current Cross Attention Transformer model used for training to predict dBHt values
 
-The script provides the model architecture, data calling, training and testing loops
+The script provides the model architecture, data calling, training and testing loops.
+
+Checkpoint for saving of model parameters implemented, in case training loop is cut due to lack of memory.
 
 ### u_train_model_dBHt_debug_ver.py 
 
@@ -103,3 +105,5 @@ Legacy RNN model, train and test loop for training of model to predict dBHt > th
 ### u_train_model_dBHt_CrossAttMini.py
 
 Cross Attention Transformer model used for training to predict dBHt values, with mini mini batch backpropagation + mini batch gradient descent implemented
+
+Checkpoint for saving of model parameters implemented, in case training loop is cut due to lack of memory.
