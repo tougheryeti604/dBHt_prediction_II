@@ -175,7 +175,7 @@ class SpaceWeatherDataset(Dataset):
 
         return x, y, z
     
-def optimise(train_Dataset, train_dirs):   
+def optimise(train_Dataset, train_dirs, model_params = None):   
     ''' Epoch - 1 run throughout the entire dataset (We can limit our dataset)
     Batch - OUr entire dataset is split into smaller batches for separate loading into the model for trainigng 
     - Gradient descent is carried out per batch
@@ -195,9 +195,9 @@ def optimise(train_Dataset, train_dirs):
 
     # Set some model training parameters 
     train_model = Transformer() # Initialise our AEAEAEAE OPTIMUS PRIME (Transformer Neural Network)
-    num_epoch = 30 # It is the number of times the model trains over the whole dataset
+    num_epoch = 1 # It is the number of times the model trains over the whole dataset
     batch_size = 50
-    dataset_size = 100000
+    dataset_size = 50000
     num_batches = dataset_size / batch_size
 
     lossFunction = nn.MSELoss()
@@ -205,6 +205,11 @@ def optimise(train_Dataset, train_dirs):
     dataloader = DataLoader(train_dirs[:dataset_size], batch_size=batch_size, shuffle=True) # Puts all our data files into batches 
 
     train_model.to(device='cuda')
+
+    if model_params != None: 
+        print("Loading from checkpoint ...")
+        params = torch.load(model_params)
+        train_model.load_state_dict(params)
 
     for epoch in range(num_epoch): # Train our model for the given of epochs 
         train_model.train()
@@ -244,12 +249,16 @@ def optimise(train_Dataset, train_dirs):
         epoch_loss = total_batch_loss / num_batches
         epoch_loss_tracker.append(epoch_loss.item())
 
+        torch.save(train_model.state_dict(), 'C:/Users/UserAdmin/Documents/PythonWork/dbdt_MKII_u/Input_Label_dBHt/assemble_Transformer/config_1/checkpoint2')
+
         print("Epoch: {0}, Loss: {1}".format(epoch+1, epoch_loss))  
       
     return epoch_loss_tracker, train_model.state_dict(), all_outputs, all_labels, all_inputs
     
 def train_loop(train_Dataset, train_dirs): # KICK STARTS TRAINING L
-    train_loss, model_params, all_outputs, all_labels, all_inputs = optimise(train_Dataset, train_dirs) # optimise() is our training loop
+    checkpoint = "C:/Users/UserAdmin/Documents/PythonWork/dbdt_MKII_u/Input_Label_dBHt/assemble_Transformer/config_1/checkpoint"
+
+    train_loss, model_params, all_outputs, all_labels, all_inputs = optimise(train_Dataset, train_dirs, checkpoint) # optimise() is our training loop
        
     # Save weights and biases 
     torch.save(model_params, 'C:/Users/UserAdmin/Documents/PythonWork/dbdt_MKII_u/Input_Label_dBHt/assemble_Transformer/config_1/model_v1')
@@ -365,7 +374,7 @@ def main(): # TIES TRAINING LOOP, EVALUATION AND TEST TOGETHER
     nonNATest_Dataset = SpaceWeatherDataset(non_na)
 
     # Train model
-    loss_file = train_loop(train_Dataset, train_dirs)
+    #@loss_file = train_loop(train_Dataset, train_dirs)
 
     # Test our model and save model performance files for plotting
     forecast_file, ground_truth_file, allDates_file = testnsave(allTest_Dataset, all_test)
