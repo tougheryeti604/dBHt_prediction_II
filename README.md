@@ -107,3 +107,25 @@ Legacy RNN model, train and test loop for training of model to predict dBHt > th
 Cross Attention Transformer model used for training to predict dBHt values, with mini mini batch backpropagation + mini batch gradient descent implemented
 
 Checkpoint for saving of model parameters implemented, in case training loop is cut due to lack of memory.
+
+### RNN.pt // TNN_1.pt // TNN_2.pt
+
+Saved weights and bias values for 
+RNN model
+2 cross attention transformer models
+
+TNN_1: 
+Parameters:
+CAT NN with sinusoidal Positioning Encoding 
+Single head
+1 Encoder, 1 Decoder block
+30 epochs, 50 000 data sets, 50 batch size
+0.001 learning rate
+
+TNN_2:
+Parameters
+CAT NN with sinusoidal Positioning Encoding 
+Single head
+6 Encoder, 6 Decoder block
+30 epochs, 50 000 data sets, 50 batch size
+0.001 learning rate 
